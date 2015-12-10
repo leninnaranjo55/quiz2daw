@@ -15,9 +15,10 @@ exports.load = function(req, res, next, quizId) {
 
 // GET /quizes
 exports.index = function(req, res) {
-	models.Quiz.findAll().then(
-                function(quizes) {
-    res.render('quizes/index.ejs', {quizes: quizes});
+	models.Quiz.findAll(
+	{where: {cuestionarioId: Number(req.cuestionario.id)}}
+	).then(function(quizes) {
+    res.render('quizes/index.ejs', {quizes: quizes, cuestionario: req.cuestionario});
 });
 }
 
@@ -44,13 +45,13 @@ exports.new = function(req, res) {
 	var quiz = models.Quiz.build( //crea objeto quiz
 	{pregunta: "Pregunta", respuesta: "Respuesta"}
 	);
-    res.render('quizes/new', {quiz: quiz});
+    res.render('quizes/new', {quiz: quiz, cuestionario: req.cuestionario});
 };
 
 // POST /quizes/create
 exports.create = function(req, res) {
 	var quiz = models.Quiz.build( req.body.quiz );
-	
+	quiz.CuestionarioId=req.cuestionario.id;
 	//guarda en DB los campos pregunta y respuesta de quiz
 	quiz.validate()
 	.then(
@@ -58,8 +59,8 @@ exports.create = function(req, res) {
 			if(err) {
 			res.render('quizes/new', {quiz: quiz, errors: err.errors});
 			} else {
-				quiz.save({fields: ["pregunta", "respuesta"]}).then(function(){
-					res.redirect('/admin/quizes');
+				quiz.save({fields: ["pregunta", "respuesta","CuestionarioId"]}).then(function(){
+					res.redirect('/admin/cuestionarios/'+req.cuestionario.id+'/quizes');
 				})	//Redireccion HTTP (URL relativo) lista de preguntas
 			}
 		}
@@ -69,7 +70,7 @@ exports.create = function(req, res) {
 // GET /quizes/:id/edit
 exports.edit = function(req, res) {
     var quiz = req.quiz; //autoload de instancia de quiz
-    res.render('quizes/edit', {quiz: quiz});
+    res.render('quizes/edit', {quiz: quiz, cuestionario: req.cuestionario});
 };
 
 exports.update = function(req, res) {
@@ -85,7 +86,7 @@ exports.update = function(req, res) {
                 }else{
                     req.quiz
                             .save({fields:["pregunta","respuesta"]})
-                            .then(function(){res.redirect('/admin/quizes');});
+                            .then(function(){res.redirect('/admin/cuestionarios/'+req.cuestionario.id+'/quizes');});
                 }
             }
         );
@@ -93,6 +94,6 @@ exports.update = function(req, res) {
 
 exports.destroy = function(req, res) {
     req.quiz.destroy().then( function(){
-        res.redirect('/admin/quizes');
+        res.redirect('/admin/cuestionarios/'+req.cuestionario.id+'/quizes');
     }).catch(function(error){next(error)});
 };

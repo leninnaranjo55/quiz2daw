@@ -1,0 +1,16 @@
+<table border="1px" width="400" style="margin:0 auto;">
+<h2>Cuestionarios</h2>
+	
+
+<tr><td>Creador</td><td>Observaciones</td><td>Fecha</td><td colspan="3">Acciones</td></tr>
+    <tr>
+		<td><%= cuestionario.creador %></td>
+		<td><%= cuestionario.observaciones %></td>    
+		<td><%= cuestionario.fechaFin %></a></td>
+		<td><a href="/admin/cuestionarios/<%= cuestionario.id %>/quizes"><button>Mostrar</button></a></td>
+		<td><a href="/admin/cuestionarios/<%= cuestionario.id %>/edit"><button>editar</button></a></td>
+	</tr>
+	 
+		
+	
+</table><br/>

@@ -36,6 +36,10 @@ CuestionarioAsignado.belongsTo(Cuestionario, Alumno);
 Alumno.hasMany(CuestionarioAsignado);
 Cuestionario.hasMany(CuestionarioAsignado);
 
+
+Quiz.belongsTo(Cuestionario);
+Cuestionario.hasMany(Quiz);
+
 // sequelize.sync() crea e inicializa tabla de preguntas en DB
 sequelize.sync().then(function() {
 	// then(..) ejecuta el manejador una vez creada la tabla
@@ -46,6 +50,12 @@ sequelize.sync().then(function() {
 		});
 		User.create({ username: 'pepe' ,
 					  password: '5678'
+		});
+		User.create({ username: 'profesor' ,
+					  password: '9876'
+		});
+		User.create({ username: 'alumno' ,
+					  password: '5432'
 		})
 		.then(function(){console.log('Tabla User inicializada')});
 		};
@@ -72,6 +82,13 @@ sequelize.sync().then(function() {
 						email: 'Juan@gmail.com',
 						userId: 2
 		});
+		Alumno.create({ dni: '31237698B',
+						apellido1: 'Pérez',
+						apellido2: 'López',
+						nombre: 'Carlos',
+						email: 'Carlos@gmail.com',
+						userId: 4
+		});
             };
 	});
 
@@ -84,6 +101,14 @@ sequelize.sync().then(function() {
 			  movil: '699699699',
 			  departamento: 'Informatica',
 			  userId: 1,
+		});
+		Profesor.create({ apellidos: 'Soro' ,
+			  nombre: 'Juan Antonio',
+			  email: 'juanantonio@gmail.com',
+			  dni: '87654321J',
+			  movil: '655699655',
+			  departamento: 'Informatica',
+			  userId: 3,
 		})
 		.then(function(){console.log('Tabla Profesor inicializada')});
 		};

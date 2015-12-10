@@ -39,6 +39,7 @@
 			<%}else{%>
 				<!-- <span class="right"> --> <li><a>Rol:<%=session.role%> - <%=session.user.username%></a></li><li><a href="/logout">Logout</a></li></span>
 			<%}%>
+			
 			<li><a href="/admin/">Inicio</a></li>
 			<li><a href="/admin/quizes">Preguntas</a></li>
 			<li><a href="/admin/users">Usuarios</a></li>
@@ -48,6 +49,10 @@
 			<li><a href="/admin/cuestionarios">Cuestionarios</a></li>
 			<li><a href="/admin/materias">Materias</a></li>
 			<li><a href="/admin/observaciones">Observaciones</a></li>
+			
+		
+			
+			
           </ul>
 
         </div>
@@ -60,9 +65,8 @@
           <ul class="nav nav-sidebar">
             <% if(!session.user){ %>
 				<!-- <span class="right"> --> <li><a href="/login">Login</a></li></span>
-			<%}else{%>
-				<!-- <span class="right"> --> <li><a>Rol:<%=session.role%> - <%=session.user.username%></a></li><li><a href="/logout">Logout</a></li></span>
-			<%}%>
+			<%} else if(session.user.username=="admin"){ %>	
+			<!-- <span class="right"> --> <li><a>Rol:<%=session.role%> - <%=session.user.username%></a></li><li><a href="/logout">Logout</a></li></span>
 			<li><a href="/admin/">Inicio</a></li>
 			<li><a href="/admin/quizes">Preguntas</a></li>
 			<li><a href="/admin/users">Usuarios</a></li>
@@ -72,6 +76,18 @@
 			<li><a href="/admin/cuestionarios">Cuestionarios</a></li>
 			<li><a href="/admin/materias">Materias</a></li>
 			<li><a href="/admin/observaciones">Observaciones</a></li>
+			
+			 <%} else if(session.role==1){ %>
+			 <!-- <span class="right"> --> <li><a>Rol:<%=session.role%> - <%=session.user.username%></a></li><li><a href="/logout">Logout</a></li></span>
+			<li><a href="/admin/">Inicio</a></li>
+			<li><a href="/admin/cuestionarios">Cuestionarios</a></li>
+			
+			<%}else if(session.role==2){%>
+			<!-- <span class="right"> --> <li><a>Rol:<%=session.role%> - <%=session.user.username%></a></li><li><a href="/logout">Logout</a></li></span>
+			<li><a href="/admin/">Inicio</a></li>
+			<li><a href="/admin/cuestionarios">Cuestionarios</a></li>
+			
+			<%}%>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
